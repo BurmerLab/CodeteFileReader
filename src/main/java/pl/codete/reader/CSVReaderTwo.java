@@ -26,15 +26,12 @@ public class CSVReaderTwo {
      public static Map<String, List<Rows>> allParameters = new HashMap<String, List<Rows>>();
     
       public static void main(String [] args) throws ParseException, SQLException, Exception{
-        String file = "c:/task/csvFileNumer2.csv";
-        int batchSize = 4;
+        String file = "c:/task/csvFileNumer1.csv";
         CSVReaderTwo.readFile(file);
         
         Database database = new Database();
         Connection connection = database.GetConnection();
         long startTime = System.currentTimeMillis();
-        
-        PreparedStatement pStatement = null;
         
         for(int x=0; x<=allRowsInCSVFile.size()-1; x++){
           Rows row = allRowsInCSVFile.get(x);
@@ -48,45 +45,28 @@ public class CSVReaderTwo {
             newRowList.add(row);
             allParameters.put(row.getDate(), newRowList);
           }
-//          if(!isThereTableExist(connection, row.getDate())){
-//            createNewTable(row, connection);
-//            }
-          System.out.println("Dodano do MAPY rekordow: " + x);
-          }
+          
+          createTableInDataBase(connection, row);
+          System.out.println("Added to map rekords: " + x);
+        }
+        
         for(Entry<String, List<Rows>> rowElement : allParameters.entrySet()) {
-          String key = rowElement.getKey();
           List<Rows> rowSortedByDate = rowElement.getValue();
+          PreparedStatement pStatement = connection.prepareStatement("INSERT INTO \""+ rowElement.getKey() +"\" (cost) VALUES (?);");
           
           for(Rows row : rowSortedByDate){
-            System.out.println("dla Kluczu: " + key);
-            System.out.println("sa wartosci: " + row.getCost());
+            pStatement.setLong(1, row.getCost());
+            pStatement.addBatch();
           }
-        }
-        // okej pakuje se w odpowienie mapy
-        // teraz zrobic:
-        
-        // kazda mape z danym kluczem, zapakowac do BD tzn.
-        // dlaklucza 1/1/2013 zapakowac cala liste do addBatch, dopiero pozniej batch execute :)
-        
-        
-//          pStatement = connection.prepareStatement("INSERT INTO \""+ row.getDate() +"\" (cost) VALUES (?);");
-//          pStatement.setLong(1, row.getCost());
-//          pStatement.addBatch();
-          
-          
           pStatement.executeBatch();
-          connection.close();
+          System.out.println("Execute Batch for: " + rowElement.getKey());
+        }
+        connection.close();
           
-          long endTime = System.currentTimeMillis();
-          long elapsedTime = (endTime - startTime) / 1000;
-          System.out.println("all time: " + elapsedTime +"sek");
+        long endTime = System.currentTimeMillis();
+        long elapsedTime = (endTime - startTime) / 1000;
+        System.out.println("All time: " + elapsedTime +"sek");
       }
-      
-      
-//          if (x % batchSize == 0) {
-//              pStatement.executeBatch();
-//              System.out.println("Wybilo 1000");
-//            }
       
         public static void readFile(String fileName){
             try{
@@ -104,11 +84,8 @@ public class CSVReaderTwo {
                   long cost = (long) (Double.parseDouble(cells[0]) * 100);
                   row.setCost(cost);
                   
-//                  System.out.println("cost dodany: " + cost);
-                  
                   String calendarDate = cells[1];
                   row.setDate(calendarDate); 
-//                  System.out.println("date dodany: " + calendarDate);
                   
                   allRowsInCSVFile.put(progress, row);
                   //lub klucz to data
@@ -125,10 +102,10 @@ public class CSVReaderTwo {
     DatabaseMetaData dataBaseMetas = connection.getMetaData();
     ResultSet tables = dataBaseMetas.getTables(null, null, tabel, null);
     if (tables.next()) {
-      System.out.println("CONTINUE- Tabela "+ tabel+" istnieje ");
+//      System.out.println("CONTINUE- Tabela "+ tabel+" istnieje ");
       return true;
     }else{
-      System.out.println("Tabela "+ tabel+" nie istnieje");
+//      System.out.println("Tabela "+ tabel+" nie istnieje");
       return false;
     }
   }
@@ -141,5 +118,11 @@ public class CSVReaderTwo {
     System.out.println("Utworzono tabele o nazwie:" + row.getDate());
     createNewTable.close();
     
+  }
+
+  public static void createTableInDataBase(Connection connection, Rows row) throws SQLException {
+    if(!isThereTableExist(connection, row.getDate())){
+      createNewTable(row, connection);
+      }
   }
 }
