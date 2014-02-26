@@ -49,9 +49,6 @@ public class CSVReader {
           long endTime = System.currentTimeMillis();
           long elapsedTime = (endTime - startTime)/1000;
           System.out.println("time: " + elapsedTime);
-//          submit the batch for execution
-//          int[] insertCounts = ps.executeBatch();
-//          ps .executeUpdate();
       }
       
       
@@ -66,16 +63,10 @@ public class CSVReader {
                   if (line == null) break;
                   
                   String[] cells = line.split(";");
-                  Rows row = new Rows();
                   
                   long cost = (long) (Double.parseDouble(cells[0]) * 100);
-                  row.setCost(cost);
-                  
-//                  System.out.println("cost dodany: " + cost);
-                  
                   String calendarDate = cells[1];
-                  row.setDate(calendarDate); 
-//                  System.out.println("date dodany: " + calendarDate);
+                  Rows row = new Rows(cost, calendarDate);
                   
                   allRowsInCSVFile.put(progress, row);
                   //lub klucz to data

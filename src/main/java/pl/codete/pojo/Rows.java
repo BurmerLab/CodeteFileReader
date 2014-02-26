@@ -16,6 +16,11 @@ public class Rows {
   private long cost;
   private String date;
 
+  public Rows(long cost, String date) {
+    this.cost = cost;
+    this.date = date;
+  }
+
   public long getCost() {
     return cost;
   }
