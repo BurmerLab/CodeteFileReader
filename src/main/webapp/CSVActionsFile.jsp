@@ -16,22 +16,13 @@
   
   <%
     int fileNumber = Integer.parseInt(request.getParameter("count"));
-    out.println("test w : " + fileNumber);
-    
-   CSVReaderTwo.parseAndAddToDataBaseFile(fileNumber);
+    out.println("Zapisano do bazy rekordy z liczby plikow: " + fileNumber);
+    for(int x=0; x<=fileNumber; x++){
+      CSVReaderTwo.parseAndAddToDataBaseFile(fileNumber);
+    }
     
   %>
-  <div id="table-from-db">
-    Dodac jeszcze zeby od poczatku ladowaly sie wartosci
-    ok ten text sie laduje i nastepny trzeba zrobic w stronie tableWithContent
-    <script type="text/javascript">// <![CDATA[
-      $(document).ready(function() {
-      $.ajaxSetup({ cache: false }); // This part addresses an IE bug. without it, IE will only load the first number and will never refresh
-      setInterval(function() {
-      $('#table-from-db').load('tableWithContent.jsp');
-      }, 3000);
-      });
-    // ]]></script>
+  
     
   </div>
   </body>

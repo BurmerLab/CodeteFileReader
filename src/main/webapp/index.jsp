@@ -9,7 +9,7 @@
     </head>
     <body>
       <form action="CSVActionsFile.jsp" method="get">
-        <p>Wpisz liczbe ktore chcesz zaladowac:</p>
+        <p>Wpisz liczbe plikow ktorych chcesz zaladowac:</p>
         <input type="text" name="count"/>
         <input type="submit" value="Do Dziela"/>
       </form>

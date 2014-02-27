@@ -4,6 +4,9 @@
     Author     : Michał
 --%>
 
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="pl.codete.database.dao.RowsDAO"%>
 <%@page import="pl.codete.pojo.Raport"%>
@@ -16,10 +19,15 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JSP Page</title>
+    <title>Tabela</title>
   </head>
   <body>
+    <%
+    String a = "sdad";
+    %>
     <c:out value="BLALBALBLLALBLALA"></c:out>
+    <%request.setAttribute(a, "lololo");%>
+    <c:out value="${a}"/>
       <%
        Database database = new Database();
        Connection connection = database.GetConnection();
@@ -37,8 +45,9 @@
          <tr>
            <td>Srednia</td>
           <%
+            NumberFormat formatter = new DecimalFormat("#0.00");
             for(Raport raport : list){
-              out.println("<td>" + raport.getAvgValue() + "</td>");
+              out.println("<td>" + formatter.format(raport.getAvgValue()) + "</td>");
             }
           %>
          </tr>
@@ -59,7 +68,18 @@
           %>
          </tr>
        </table>
-    
-                
+         
+         <div id="table-from-db">
+    Dodac jeszcze zeby od poczatku ladowaly sie wartosci
+    ok ten text sie laduje i nastepny trzeba zrobic w stronie tableWithContent
+    <script type="text/javascript">// <![CDATA[
+      $(document).ready(function() {
+      $.ajaxSetup({ cache: false }); // This part addresses an IE bug. without it, IE will only load the first number and will never refresh
+      setInterval(function() {
+      $('#table-from-db').load('tableWithContent.jsp');
+      }, 3000);
+      });
+    // ]]></script>
+         
   </body>
 </html>

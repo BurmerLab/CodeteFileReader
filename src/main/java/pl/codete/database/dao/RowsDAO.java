@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +30,6 @@ public class RowsDAO {
          System.out.println("MIN " + raport.getMinValue());
          System.out.println("MAX " + raport.getMaxValue());
         }
-//       for(String name : tablesNames){
-//         System.out.println("tablea : " + name);
-//       }
-       
     }
   
     public static ArrayList<Raport> obtainAllRaportObjects(Connection connection, ArrayList<String> tablesNames) throws Exception {
