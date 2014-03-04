@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.codete.pojo;
 
 /**
  *
- * @author Michał
+ * @author Michał Burmer
  */
+
 public class Raport {
   private double maxValue;
   private double minValue;

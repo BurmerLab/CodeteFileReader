@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.codete.database.dao;
 
 /**
@@ -10,11 +6,6 @@ package pl.codete.database.dao;
  */
 public class QUERY_PARAMS {
   
-  //main
-  public final static String AND = " AND ";
-  public final static String WHERE = " WHERE ";
-  public final static String OR = " OR ";
-  public final static String LIMIT = " LIMIT ";
   
   
   public final static String INSERT_ROW_INTO_DATABASE = "INSERT INTO t_rows(cost, date) VALUES (?,?)";

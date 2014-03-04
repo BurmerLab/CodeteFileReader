@@ -13,5 +13,6 @@
         <input type="text" name="count"/>
         <input type="submit" value="Do Dziela"/>
       </form>
+      <a href="table.jsp" target="_blank">Tabela z danymi</a>
     </body>
 </html>
