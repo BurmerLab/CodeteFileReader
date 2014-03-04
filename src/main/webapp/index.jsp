@@ -11,6 +11,11 @@
       <form action="CSVActionsFile.jsp" method="get">
         <p>Wpisz liczbe plikow ktorych chcesz zaladowac:</p>
         <input type="text" name="count"/>
+        <p>Insert type of system you use:</p>
+        <select name="system">
+          <option>windows</option>
+          <option>linux</option>
+        </select>
         <input type="submit" value="Do Dziela"/>
       </form>
       <a href="table.jsp" target="_blank">Tabela z danymi</a>

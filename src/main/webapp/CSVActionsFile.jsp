@@ -7,12 +7,13 @@
     <title>Preparing and saving</title>
     
   </head>
-  
   <%
     int fileNumber = Integer.parseInt(request.getParameter("count"));
+    String systemType = request.getParameter("system");
+    
     out.println("Saved to Data Base records from file number: " + fileNumber);
     for(int x=0; x<=fileNumber; x++){
-      CSVReader.runApplication(fileNumber);
+      CSVReader.runApplication(fileNumber, systemType);
     }
   %>
   

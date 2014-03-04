@@ -24,17 +24,18 @@ import pl.codete.pojo.Rows;
  */
 public class CSVReader {
 
-//	public static void main(String[] args) throws ParseException, SQLException,
-//        Exception {
-//      int count = 3;
-//      runApplication(count);
-//	}
+	public static void main(String[] args) throws ParseException, SQLException,
+        Exception {
+      int count = 3;
+      String system = "windows";
+      runApplication(count, system);
+	}
 
-  public static void runApplication(int count) throws Exception {
+  public static void runApplication(int count, String system) throws Exception {
     CSVReader csvReader = new CSVReader();
     for (int x = 1; x <= count; x++) {
 
-        String filename = csvReader.getFilename(x);
+        String filename = csvReader.getFilename(x, system);
         LineNumberReader reader = new LineNumberReader(new FileReader(filename));
 
         int offset = 0;
@@ -74,13 +75,23 @@ public class CSVReader {
       return csvFileRows;
 	}
 
-	private String getFilename(int x){
+	private String getFilename(int x, String systemType){
       StringBuilder fileName = new StringBuilder();
+      
+      if(systemType.equals("windows")){
       return fileName
-              .append("c:/task/CSVFileNumber")
+              .append("c:/codete/CSVFileNumber")
               .append(x)
               .append(".csv")
               .toString();
+      }else if(systemType.equals("linux")){
+         return fileName
+              .append("/home/codete/CSVFileNumber")
+              .append(x)
+              .append(".csv")
+              .toString();
+      }
+      throw new UnsupportedOperationException("There is no system");
 	}
 	
 	private void insertToDb(Database database, Map<Integer, Rows> rows) throws Exception{
